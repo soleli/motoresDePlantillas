@@ -20,6 +20,8 @@ app.use(express.static(pathStatic));
 
 // Template Engine
 app.set('view engine', 'ejs');
+const productsRoutes = require('./routes/productsRoutes');
+app.use('/' ,productsRoutes);
 
 app
 .listen(PORT,()=>{
