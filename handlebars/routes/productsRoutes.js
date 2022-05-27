@@ -1,22 +1,22 @@
 const express = require('express')
 const router = express.Router();
-const multer= require('multer');
+const multer = require('multer');
 const path = require('path');
 const storage = multer.diskStorage({
-    destination: (req ,file, cb)=>{
-        cb(null, path.join(__dirname, '../../public/images/'));
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, '../public/images/'));
     },
-    
-    filename: (res,file,cb)=>{
-    
-        const newFilename = Date.now() + '-' +  file.originalname;
-    
-        cb(null,newFilename);
-    
+
+    filename: (res, file, cb) => {
+
+        const newFilename = Date.now() + '-' + file.originalname;
+
+        cb(null, newFilename);
+
     }
-    
-    })
-const uploadFile = multer({storage});
+
+})
+const uploadFile = multer({ storage });
 
 let productos = []
 
@@ -24,10 +24,24 @@ let productos = []
   return res.json(productos)
 }) */
 router.get('', (req, res) => {
-    return res.render("formProduct.html")
-  })
+    return res.render("layout/formProduct")
+})
+router.get('/products', (req, res) => {
+    return res.render("layout/listProduct", { productos })
+})
+router.post('', uploadFile.single('image'), (req, res) => {
 
-router.get("/:id", (req, res) => {
+    let newProduct = {
+        id: productos.length + 1,
+        ...req.body,
+        image: req.file.filename
+    };
+    productos.push(newProduct);
+
+
+    return res.render("layout/listProduct", { productos })
+})
+/* router.get("/:id", (req, res) => {
   id = req.params.id;
   let productToId = productos.find(product => product.id == id);
   if (productToId) {
@@ -86,5 +100,5 @@ router.delete('/:id', (req, res) => {
   let finalProducts = productos.filter(product => product.id != id);
   return res.json(finalProducts)
 })
-
+ */
 module.exports = router;

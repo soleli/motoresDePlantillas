@@ -17,12 +17,11 @@ const engineFn = engine({
   
   app.set('views', './views')
   app.set('view engine', 'hbs')
-  
+
 const pathStatic = path.resolve(__dirname, "./public");
 
 
-app.set('views', __dirname + '/views');
-app.set('view engine', 'html');
+
 // ************ Para usar Post ************
 app.use(express.urlencoded({extended:false}));
 
