@@ -22,8 +22,21 @@ let productos = []
 
 
 router.get('', (req, res) => {
-    return res.send("hola")
+    return res.render("formProduct")
 })
+router.post('', uploadFile.single('image'), (req, res) => {
+
+    let newProduct = {
+        id: productos.length + 1,
+        ...req.body,
+        image: req.file.filename
+    };
+    productos.push(newProduct);
+
+
+    return res.send(productos)
+})
+
 
 
 module.exports = router;
