@@ -37,6 +37,10 @@ router.post('', uploadFile.single('image'), (req, res) => {
     return res.send(productos)
 })
 
+router.get('/products', (req, res) => {
+        return res.render("listProduct", {"productos":productos})
+  
+})
 
 
 module.exports = router;
