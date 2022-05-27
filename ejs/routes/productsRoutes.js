@@ -34,8 +34,14 @@ router.post('', uploadFile.single('image'), (req, res) => {
     productos.push(newProduct);
 
 
-    return res.send({ productos })
+    return res.render("listProduct", { productos })
 })
 
+router.get('/products', (req, res) => {
+    if (productos.length>0)
+        return res.render("listProduct", {"productos":productos })
+    else
+        return res.render("listProduct", { msg: "No hay productos cargados" })
+})
 
 module.exports = router;
